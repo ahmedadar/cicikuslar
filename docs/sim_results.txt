@@ -1,0 +1,4 @@
+A) Ham kurallar (Gerilim yok)            {'first': 0.38, 'second': 0.24, 'draw': 0.39, 'avg_rounds': 26.07, 'p10': 19, 'p90': 30, 'cards_per_turn': 2.53, 'wasted_energy': 6.76}
+B) + Gerilim (R7)                        {'first': 0.58, 'second': 0.42, 'draw': 0.0, 'avg_rounds': 10.1, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.42, 'wasted_energy': 0.23}
+C) B + 2.oyuncu +1 Enerji [ONERILEN]     {'first': 0.54, 'second': 0.46, 'draw': 0.0, 'avg_rounds': 10.11, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.44, 'wasted_energy': 0.27}
+D) C + HP 15                             {'first': 0.53, 'second': 0.47, 'draw': 0.0, 'avg_rounds': 9.18, 'p10': 8, 'p90': 10, 'cards_per_turn': 2.41, 'wasted_energy': 0.17}
