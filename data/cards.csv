@@ -1,0 +1,19 @@
+id,ad,grup,tur,maliyet,maliyet_tipi,adet,metin
+atk1,Pençe,oyun,attack,1,energy,8,1 Hasar ver.
+sh1,Kanat Siperi,oyun,shield,1,energy,8,1 Kalkan kazan.
+atk1sh1,Atılış,oyun,hybrid,2,energy,4,1 Hasar ver. 1 Kalkan kazan.
+sh2,Tüy Duvarı,oyun,shield,2,energy,4,2 Kalkan kazan.
+atk2,Gaga Darbesi,oyun,attack,2,energy,4,2 Hasar ver.
+draw2,Keşif Uçuşu,oyun,draw,1,energy,4,2 kart çek.
+gain1,Tüneme,oyun,energy,0,energy,4,1 Enerji kazan.
+shslot_add,Siper Kur,durum,slot,2,energy,2,Kalkan Yuvası +1 (en fazla 4). Kalıcı.
+shslot_break,Siper Kır,durum,slot,2,energy,2,Rakibin 1 Kalkan Yuvası'nı yok et (en az 1 kalır). Yuva dışında kalan Kalkan kaybolur.
+enslot_add,Kan Bedeli,durum,slot,2,hp,2,2 Can öde. Enerji Yuvası +1 (en fazla 4). Kalıcı.
+status_draw,Durum Avı,durum,draw,1,energy,2,"Destenin üstünden ilk Durum kartı çıkana kadar kart aç. Onu eline al, açılan diğerlerini destenin altına karışık koy."
+reflect,Ayna Tüy,durum,reaction,1,energy,2,Bir sonraki turuna kadar: seni hedefleyen ilk Saldırı'nın Hasar'ı kadar (en fazla 3) rakibe engellenemez Hasar yansıt.
+lock_shield,Kilit: Siper,durum,stun,1,energy,1,Rakibin 1 Kalkan Yuvası bu tur Kilitli: etkin Kalkan kapasitesi 2 azalır.
+lock_energy,Kilit: Kaynak,durum,stun,1,energy,1,Rakibin 1 Enerji Yuvası sonraki turunda Kilitli: o tur 1 az Enerji kazanır.
+curse,Kara Tüy,ozel,curse,-,-,1,Oynanamaz. Elindeyken Tur Sonu'nda 1 Hasar al. 2 kartlık Çöp Atma veya Takas ile elden çıkarılır.
+recycle_free,Hortlayan Hamle,ozel,recycle,1,energy,1,Çöpün en üstündeki kartı (Lanet hariç) bedava oyna.
+multiplier,Cicikuş Çığlığı,ozel,buff,1,energy,1,Bu turda oynayacağın bir sonraki Saldırı/Kalkan/Çekme/Enerji kartının sayıları ×2.
+metallic,Metalik Deri,ozel,permanent,3,energy,1,Kalıcı. Her tur başı 1 Kalkan kazan.

@@ -1,0 +1,269 @@
+{
+ "version": "0.1",
+ "deck_size": 52,
+ "start": {
+  "hp": 20,
+  "energy": 4,
+  "hand": 5,
+  "draw_per_turn": 2,
+  "hand_limit": 7,
+  "bank_cap": 8,
+  "shield_slots": 2,
+  "energy_slots": 2
+ },
+ "cards": [
+  {
+   "id": "atk1",
+   "name_tr": "Pençe",
+   "name_en": "Claw",
+   "group": "oyun",
+   "type": "attack",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 8,
+   "effect": {
+    "atk": 1
+   },
+   "text_tr": "1 Hasar ver."
+  },
+  {
+   "id": "sh1",
+   "name_tr": "Kanat Siperi",
+   "name_en": "Wing Guard",
+   "group": "oyun",
+   "type": "shield",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 8,
+   "effect": {
+    "shield": 1
+   },
+   "text_tr": "1 Kalkan kazan."
+  },
+  {
+   "id": "atk1sh1",
+   "name_tr": "Atılış",
+   "name_en": "Swoop",
+   "group": "oyun",
+   "type": "hybrid",
+   "cost": 2,
+   "cost_type": "energy",
+   "count": 4,
+   "effect": {
+    "atk": 1,
+    "shield": 1
+   },
+   "text_tr": "1 Hasar ver. 1 Kalkan kazan."
+  },
+  {
+   "id": "sh2",
+   "name_tr": "Tüy Duvarı",
+   "name_en": "Feather Wall",
+   "group": "oyun",
+   "type": "shield",
+   "cost": 2,
+   "cost_type": "energy",
+   "count": 4,
+   "effect": {
+    "shield": 2
+   },
+   "text_tr": "2 Kalkan kazan."
+  },
+  {
+   "id": "atk2",
+   "name_tr": "Gaga Darbesi",
+   "name_en": "Beak Strike",
+   "group": "oyun",
+   "type": "attack",
+   "cost": 2,
+   "cost_type": "energy",
+   "count": 4,
+   "effect": {
+    "atk": 2
+   },
+   "text_tr": "2 Hasar ver."
+  },
+  {
+   "id": "draw2",
+   "name_tr": "Keşif Uçuşu",
+   "name_en": "Scout Flight",
+   "group": "oyun",
+   "type": "draw",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 4,
+   "effect": {
+    "draw": 2
+   },
+   "text_tr": "2 kart çek."
+  },
+  {
+   "id": "gain1",
+   "name_tr": "Tüneme",
+   "name_en": "Perch",
+   "group": "oyun",
+   "type": "energy",
+   "cost": 0,
+   "cost_type": "energy",
+   "count": 4,
+   "effect": {
+    "gain_energy": 1
+   },
+   "text_tr": "1 Enerji kazan."
+  },
+  {
+   "id": "shslot_add",
+   "name_tr": "Siper Kur",
+   "name_en": "Build Bulwark",
+   "group": "durum",
+   "type": "slot",
+   "cost": 2,
+   "cost_type": "energy",
+   "count": 2,
+   "effect": {
+    "special": "shield_slot_add"
+   },
+   "text_tr": "Kalkan Yuvası +1 (en fazla 4). Kalıcı."
+  },
+  {
+   "id": "shslot_break",
+   "name_tr": "Siper Kır",
+   "name_en": "Breach",
+   "group": "durum",
+   "type": "slot",
+   "cost": 2,
+   "cost_type": "energy",
+   "count": 2,
+   "effect": {
+    "special": "shield_slot_break"
+   },
+   "text_tr": "Rakibin 1 Kalkan Yuvası'nı yok et (en az 1 kalır). Yuva dışında kalan Kalkan kaybolur."
+  },
+  {
+   "id": "enslot_add",
+   "name_tr": "Kan Bedeli",
+   "name_en": "Blood Price",
+   "group": "durum",
+   "type": "slot",
+   "cost": 2,
+   "cost_type": "hp",
+   "count": 2,
+   "effect": {
+    "special": "energy_slot_add"
+   },
+   "text_tr": "2 Can öde. Enerji Yuvası +1 (en fazla 4). Kalıcı."
+  },
+  {
+   "id": "status_draw",
+   "name_tr": "Durum Avı",
+   "name_en": "Status Hunt",
+   "group": "durum",
+   "type": "draw",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 2,
+   "effect": {
+    "special": "status_draw"
+   },
+   "text_tr": "Destenin üstünden ilk Durum kartı çıkana kadar kart aç. Onu eline al, açılan diğerlerini destenin altına karışık koy."
+  },
+  {
+   "id": "reflect",
+   "name_tr": "Ayna Tüy",
+   "name_en": "Mirror Plume",
+   "group": "durum",
+   "type": "reaction",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 2,
+   "effect": {
+    "special": "reflect"
+   },
+   "text_tr": "Bir sonraki turuna kadar: seni hedefleyen ilk Saldırı'nın Hasar'ı kadar (en fazla 3) rakibe engellenemez Hasar yansıt."
+  },
+  {
+   "id": "lock_shield",
+   "name_tr": "Kilit: Siper",
+   "name_en": "Lock: Bulwark",
+   "group": "durum",
+   "type": "stun",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 1,
+   "effect": {
+    "special": "lock_shield"
+   },
+   "text_tr": "Rakibin 1 Kalkan Yuvası bu tur Kilitli: etkin Kalkan kapasitesi 2 azalır."
+  },
+  {
+   "id": "lock_energy",
+   "name_tr": "Kilit: Kaynak",
+   "name_en": "Lock: Source",
+   "group": "durum",
+   "type": "stun",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 1,
+   "effect": {
+    "special": "lock_energy"
+   },
+   "text_tr": "Rakibin 1 Enerji Yuvası sonraki turunda Kilitli: o tur 1 az Enerji kazanır."
+  },
+  {
+   "id": "curse",
+   "name_tr": "Kara Tüy",
+   "name_en": "Black Feather",
+   "group": "ozel",
+   "type": "curse",
+   "cost": null,
+   "cost_type": null,
+   "count": 1,
+   "effect": {
+    "special": "curse"
+   },
+   "text_tr": "Oynanamaz. Elindeyken Tur Sonu'nda 1 Hasar al. 2 kartlık Çöp Atma veya Takas ile elden çıkarılır."
+  },
+  {
+   "id": "recycle_free",
+   "name_tr": "Hortlayan Hamle",
+   "name_en": "Second Wind",
+   "group": "ozel",
+   "type": "recycle",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 1,
+   "effect": {
+    "special": "recycle"
+   },
+   "text_tr": "Çöpün en üstündeki kartı (Lanet hariç) bedava oyna."
+  },
+  {
+   "id": "multiplier",
+   "name_tr": "Cicikuş Çığlığı",
+   "name_en": "Screech",
+   "group": "ozel",
+   "type": "buff",
+   "cost": 1,
+   "cost_type": "energy",
+   "count": 1,
+   "effect": {
+    "special": "multiplier"
+   },
+   "text_tr": "Bu turda oynayacağın bir sonraki Saldırı/Kalkan/Çekme/Enerji kartının sayıları ×2."
+  },
+  {
+   "id": "metallic",
+   "name_tr": "Metalik Deri",
+   "name_en": "Metal Skin",
+   "group": "ozel",
+   "type": "permanent",
+   "cost": 3,
+   "cost_type": "energy",
+   "count": 1,
+   "effect": {
+    "special": "metallic"
+   },
+   "text_tr": "Kalıcı. Her tur başı 1 Kalkan kazan."
+  }
+ ]
+}
