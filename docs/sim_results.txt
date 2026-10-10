@@ -1,4 +1,7 @@
-A) Ham kurallar (Gerilim yok)            {'first': 0.38, 'second': 0.24, 'draw': 0.39, 'avg_rounds': 26.07, 'p10': 19, 'p90': 30, 'cards_per_turn': 2.53, 'wasted_energy': 6.76}
-B) + Gerilim (R7)                        {'first': 0.58, 'second': 0.42, 'draw': 0.0, 'avg_rounds': 10.1, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.42, 'wasted_energy': 0.23}
-C) B + 2.oyuncu +1 Enerji [ONERILEN]     {'first': 0.54, 'second': 0.46, 'draw': 0.0, 'avg_rounds': 10.11, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.44, 'wasted_energy': 0.27}
-D) C + HP 15                             {'first': 0.53, 'second': 0.47, 'draw': 0.0, 'avg_rounds': 9.18, 'p10': 8, 'p90': 10, 'cards_per_turn': 2.41, 'wasted_energy': 0.17}
+A) Ortak 104 kart, ham kurallar    {'first': 0.43, 'second': 0.32, 'draw': 0.24, 'avg_rounds': 24.43, 'p10': 17, 'p90': 30, 'cards_per_turn': 2.46, 'wasted_energy': 6.34, 'dk_masa': 41.75, 'dk_mobil': 18.75, 'dk_masa_p90': 51.8}
+B) Ortak 104 + Gerilim R7          {'first': 0.57, 'second': 0.43, 'draw': 0.0, 'avg_rounds': 10.07, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.39, 'wasted_energy': 0.42, 'dk_masa': 17.52, 'dk_mobil': 7.59, 'dk_masa_p90': 18.93}
+C) B + 2.oyuncu +1 Enerji          {'first': 0.52, 'second': 0.48, 'draw': 0.0, 'avg_rounds': 10.05, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.41, 'wasted_energy': 0.46, 'dk_masa': 17.57, 'dk_mobil': 7.61, 'dk_masa_p90': 19.07}
+D) C, Gerilim R6                   {'first': 0.52, 'second': 0.48, 'draw': 0.0, 'avg_rounds': 9.24, 'p10': 9, 'p90': 10, 'cards_per_turn': 2.42, 'wasted_energy': 0.32, 'dk_masa': 16.26, 'dk_mobil': 7.02, 'dk_masa_p90': 17.67}
+E) C, Can 15                       {'first': 0.51, 'second': 0.49, 'draw': 0.0, 'avg_rounds': 9.16, 'p10': 8, 'p90': 10, 'cards_per_turn': 2.38, 'wasted_energy': 0.26, 'dk_masa': 16.0, 'dk_mobil': 6.89, 'dk_masa_p90': 17.47}
+F) C, Can 15, Gerilim R6           {'first': 0.53, 'second': 0.47, 'draw': 0.0, 'avg_rounds': 8.34, 'p10': 8, 'p90': 9, 'cards_per_turn': 2.39, 'wasted_energy': 0.22, 'dk_masa': 14.68, 'dk_mobil': 6.29, 'dk_masa_p90': 16.13}
+G) Kisisel 52+52 (onceki), C       {'first': 0.53, 'second': 0.47, 'draw': 0.0, 'avg_rounds': 10.11, 'p10': 9, 'p90': 11, 'cards_per_turn': 2.44, 'wasted_energy': 0.29, 'dk_masa': 17.79, 'dk_mobil': 7.72, 'dk_masa_p90': 19.33}

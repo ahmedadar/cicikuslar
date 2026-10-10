@@ -9,28 +9,34 @@
 | 3 | 1 | Metalik Deri |
 | Oynanamaz | 1 | Lanet |
 
-- Ortalama maliyet (oynanabilir 50 kart): **1,26 Enerji.** Tur geliri 2 (+ Tüneme). Beklenen: tur başına ~1,5–2,5 kart oynanır; simülasyonda **2,4** kart/tur.
+- Eğri 2 kopya için de aynıdır (oranlar değişmez). Ortalama maliyet (oynanabilir 50 kart): **1,26 Enerji.** Tur geliri 2 (+ Tüneme). Beklenen: tur başına ~1,5–2,5 kart oynanır; simülasyonda **2,4** kart/tur.
 - Eğri düşük ve akıcı: elin kilitlenme riski az. 3 Enerjilik tek kart olduğu için "geç oyun" hissi eksik.
 - 2 Enerjilik kartlar iki adet 1 Enerjilik karttan **daha güçlü değil** (örn. Gaga = 2×Pençe). Tek avantajı el yerinden tasarruf. İstersen: Gaga Darbesi'ne "Kalkan varsa +1" gibi bonus ekle.
 - Saldırı değeri destede 20, Kalkan 20. **1 Enerji = 1 Hasar = 1 Kalkan** olduğu için savunma saldırıyı tam siler.
 
-## 2. Simülasyon Bulguları (`tools/sim.py`, 6000 maç, basit bot)
-| Senaryo | 1. oy. kazanır | 2. oy. kazanır | Beraberlik/tıkanma | Ort. tur |
-|---|---|---|---|---|
-| A) Ham kurallar | %38 | %24 | **%39** | 26 |
-| B) + Gerilim (7. tur) | %58 | %42 | %0 | 10,1 |
-| **C) B + 2. oyuncu +1 Enerji (önerilen)** | **%54** | **%46** | %0 | **10,1** |
-| D) C + 20 yerine 15 Can | %53 | %47 | %0 | 9,2 |
+## 2. Süre ve Simülasyon (ortak 104 kartlık deste; `tools/sim.py`, 5000 maç, basit bot)
 
-**Ana bulgu:** Verilen sayılarla (20 Can, 2 Enerji/tur, 1 Enerji = 1 Hasar = 1 Kalkan) oyun **tıkanır.** Savunma saldırıyı eşit karşılar, Kalkan kapasite sınırı (yuvalar) tek başına yetmez. Ham kurallarda maçların %39'u 30 turda bitmedi. Saldırıya tamamen odaklanan bot bile ~15 turda bitirebiliyor, yani saldırı yoğunluğu düşük.
+**Cevap: Önerilen kurallarla bir maç masada ~17 dk (aralık 15–19), mobilde ~7 dk sürüyor.** Gerilim kuralı olmazsa maç ~42 dk sürüyor ve çoğu zaman bitmiyor.
 
-**Çözümler:**
-1. **Gerilim** kuralı (7. turdan itibaren artan Can kaybı): tıkanmayı bitirir, maçlar ~10 tura iner.
-2. **2. oyuncuya +1 Enerji**: ilk oyuncu avantajını %58–42'den %54–46'ya düşürdü.
-3. Kalkan sadece sahibinin sonraki tur başına kadar sürer (bir tur tutar).
-4. Alternatifler: Can 15, ya da Saldırı kartlarını güçlendir (ör. Pençe 1, Gaga 3). Bu seçenekleri simüle ettik; Can 15 maçı 9 tura çeker.
+Süre varsayımları (tahmin, oyun testinde doğrulanmalı): masada kurulum 1 dk + tur başı 20 sn + oynanan kart/aksiyon başına 12 sn; mobilde tur başı 8 sn + aksiyon başı 6 sn. Bot ortalama turda 2,4 kart oynuyor.
 
-**Sınırlar:** Bot basit (açgözlü, kart kombosu planlamaz). Taktikler (Gizle, Takas, Gözcü, Risk) simüle edilmedi. Sonuçlar yön gösterir, gerçek denge için insan testi gerekir. Yani Gerilim'in gerçek oyuncularda maçı belirleyip belirlemediğini gözlemlemeliyiz.
+| Senaryo | 1. oy. | 2. oy. | Tıkanma | Ort. tur | Masa dk | Mobil dk |
+|---|---|---|---|---|---|---|
+| A) Ham kurallar | %43 | %32 | **%24** | 24,4 | **42** | 19 |
+| B) + Gerilim (7. tur) | %57 | %43 | %0 | 10,1 | 17,5 | 7,6 |
+| **C) B + 2. oyuncu +1 Enerji (önerilen)** | **%52** | **%48** | %0 | **10,1** | **17,6** | **7,6** |
+| D) C, Gerilim 6. turdan | %52 | %48 | %0 | 9,2 | 16,3 | 7,0 |
+| E) C, Can 15 | %51 | %49 | %0 | 9,2 | 16,0 | 6,9 |
+| F) C, Can 15, Gerilim 6. tur | %53 | %47 | %0 | 8,3 | 14,7 | 6,3 |
+| G) Kişisel 52+52 deste (eski plan), C | %53 | %47 | %0 | 10,1 | 17,8 | 7,7 |
+
+**Karar için kullanabileceğin sonuçlar:**
+1. **Ortak desteye geçmek tempoyu ve dengeyi bozmuyor** (C ile G neredeyse aynı). Ortak deste etkileşimi artırır: rakibin attığı kartı Hortlayan Hamle ile kullanabilirsin, Gözcü ve Durum Avı ortak desteyi etkiler.
+2. **Süreyi belirleyen kural Gerilim:** onsuz oyun tıkanıyor (savunma 1 Enerji = 1 Kalkan ile saldırıyı eşit karşılıyor). Hedefin 10–12 dk ise ya Can 15 ya Gerilim 6. tur (F) ya da ikisi birden.
+3. **Dikkat:** Bot maçlarının çoğu Gerilim ile ~9.–11. turda bitiyor, yani şu an kazananı çoğunlukla "Gerilim anında kimin Can'ı fazla" belirliyor. İnsanlar daha saldırgan oynarsa maç kısalır. Bu varsayımı oyun testinde mutlaka doğrulayalım.
+4. 104 kartta deste maçta bitmiyor (tur başı ~5 kart tüketilir, ~50 kart), yani karıştırma kuralı neredeyse hiç devreye girmez.
+
+**Sınırlar:** Bot açgözlü ve kart kombosu planlamıyor. Taktikler (Gizle, Takas, Gözcü, Risk) simüle edilmedi. Süre değerleri tahmin. Gerçek denge için insan testi şart.
 
 ## 3. Kural Değişiklikleri ve Gerekçesi
 | Orijinal fikir | Değişiklik |
@@ -39,14 +45,15 @@
 | "Kalkan Yuvası / Enerji Yuvası" | Yuva = kalıcı kaynak. Enerji Yuvası +1 Enerji/tur, Kalkan Yuvası 2 Kalkan kapasitesi. Hepsi Kilit/Kır ile hedeflenebilir. |
 | Lanet "yük oluşturur" | El sınırında yer kaplar + her tur sonu 1 Hasar. Takas ile rakibe devredilir, bu yüzden tek kopya bile oyun yaratır. |
 | Enerji Yuvası 2 Can | Sayısız Enerji kazancı Can pahasına, Gerilim ile dengelenir. |
+| Deste yapısı | 2 × 52 = 104 kartlık **ortak** Çekme Destesi ve ortak Çöp. |
 | Zaman ayarlı saklama | **Gizle** taktiği: kapalı kart, sonra bedava. |
 | Kart takası & çalma | **Takas**: kör seçim + değiş tokuş (2 E) veya zorla attırma (3 E). |
 | Risk & ödül | **Cesur** (+2 kart −1 Enerji) ve **Kumar** (yazı-tura). |
 | Deste yönetimi | **Gözcü** (1 Enerji). |
 
 ## 4. Açık Kararlar (sana kalan)
-1. **Ayna deste mi, ortak deste mi?** Şu an her oyuncunun kendi 52 kartı var (mobil için daha basit, Takas ve Çöp mantığı net).
-2. **Gerilim şiddeti** (7. tur, artan) ve **Can 20 vs 15**.
+1. ~~Ortak/ayna deste~~ → **karar verildi: ortak 104 kartlık deste ve ortak Çöp.**
+2. **Hedef maç süresi:** masada ~17 dk (önerilen C) mi, ~15 dk (F) mi? Gerilim turu ve Can 20/15 buna göre seçilecek.
 3. **Takas / Gizle / Gözcü / Risk** değerleri test edilmedi.
 4. **Hortlayan Hamle** için verdiğin maliyet yoktu (1 Enerji varsaydım). **Cicikuş Çığlığı** 1, **Metalik Deri** 3 Enerji varsaydım.
 5. Tema/isimler geçici. Kart adlarını sen değiştirebilirsin.

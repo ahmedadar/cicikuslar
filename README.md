@@ -1,6 +1,6 @@
 # Cicikuş Kart Oyunu
 
-52 kartlık 1v1 düello kart oyunu (mobil hedefli).
+1v1 düello kart oyunu, 2×52 = 104 kartlık ortak deste (mobil hedefli).
 
 - `docs/KURAL_KITAPCIGI.md` — kurallar, kart metinleri
 - `docs/TASARIM_ANALIZI.md` — enerji eğrisi, denge, simülasyon bulguları

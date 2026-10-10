@@ -1,11 +1,12 @@
 # Cicikuş Kart Oyunu — Kural Kitapçığı (v0.1)
 
-2 oyunculu (1v1) düello kart oyunu · 52 kartlık deste · ~10 tur · ~15 dk
+2 oyunculu (1v1) düello kart oyunu · **ortak 104 kartlık çekme destesi (2 × 52)** · ~10 tur · masada ~17 dk, mobilde ~7 dk
 
 ## 1. Malzemeler
-- Her oyuncu için **aynı içerikte 52 kartlık kişisel deste** (ayna deste; kart listesi: `data/cards.json`).
+- **104 kartlık ortak Çekme Destesi:** 52 kartlık listenin (`data/cards.json`) **2 kopyası** karıştırılır. İki oyuncu da aynı desteden çeker. Her karttan 2 adet vardır (2 Lanet, 2 Metalik Deri, 2 Hortlayan Hamle, 2 Çığlık...).
+- **Ortak Çöp:** ortada tek, açık bir atık yığını.
 - Can sayacı (20), Enerji sayacı, Kalkan sayacı, Yuva göstergeleri, 1 jeton (yazı-tura).
-- Her oyuncunun masasında: **Deste, Çöp (atılanlar, açık), Gizli Alan (1 kart), Kalıcı Alan, Yuva Şeridi**.
+- Her oyuncunun masasında: **Gizli Alan (1 kart), Kalıcı Alan, Yuva Şeridi**.
 
 ## 2. Hazırlık
 | | 1. oyuncu | 2. oyuncu |
@@ -16,7 +17,7 @@
 | Kalkan Yuvası | 2 | 2 |
 | Enerji Yuvası | 2 | 2 |
 
-Desteni karıştır. Başlayanı yazı-tura belirler.
+Ortak desteyi karıştır; sırayla (önce 1. oyuncu) 5'er kart dağıt. Başlayanı yazı-tura belirler.
 
 ## 3. Terimler (Sözlük)
 | Terim | Anlamı (İngilizce karşılığı) |
@@ -31,7 +32,7 @@ Desteni karıştır. Başlayanı yazı-tura belirler.
 | **Lanet** | Elde duran, oynanamayan ve Can kaybettiren kart. (Curse) |
 | **Kalıcı** | Masada kalan, tekrar tekrar etki eden kart. (Permanent) |
 | **Durum kartı** | Destedeki "Durum" grubu: Yuva, Kilit, Ayna Tüy, Durum Avı. |
-| **Çöp** | Her oyuncunun açık atık yığını. Deste biterse Çöp karıştırılıp yeni deste olur. |
+| **Çöp** | İki oyuncunun da attığı/oynadığı kartların gittiği **ortak** açık yığın. Çekme Destesi biterse Çöp karıştırılıp yeni deste olur. |
 | **Enerji havuzu** | Harcanmayan Enerji kalır; üst sınır **8**. |
 
 ## 4. Tur Yapısı
@@ -85,7 +86,7 @@ Biçim: **[Maliyet] Anahtar kelime: değer.** Anahtar kelimeler hep büyük harf
 | Kilit: Siper | 1 | 1 E | Rakibin 1 Kalkan Yuvası bu tur Kilitli. |
 | Kilit: Kaynak | 1 | 1 E | Rakibin 1 Enerji Yuvası sonraki turunda Kilitli. |
 | Kara Tüy | 1 | — | Oynanamaz. Elindeyken Tur Sonu'nda Hasar 1 (kendine). |
-| Hortlayan Hamle | 1 | 1 E | Çöp'ün üstündeki kartı (Lanet hariç) bedava oyna. |
+| Hortlayan Hamle | 1 | 1 E | **Ortak** Çöp'ün üstündeki kartı (Lanet hariç, rakibin attığı dahil) bedava oyna. |
 | Cicikuş Çığlığı | 1 | 1 E | Güçlendir: sonraki Hasar/Kalkan/Çek/Enerji kartı ×2. |
 | Metalik Deri | 1 | 3 E | Kalıcı. Her tur başı Kalkan 1. |
 
@@ -95,8 +96,10 @@ Biçim: **[Maliyet] Anahtar kelime: değer.** Anahtar kelimeler hep büyük harf
 - **Güçlendir** yuva, Kilit ve Yansıt kartlarını etkilemez. Melez kartta (Atılış) iki sayı da ×2. Hortlayan Hamle ile oynanan kopya da Güçlendirilir.
 - **Kilit: Siper** etkin Kalkan'ı 2 düşürür; fazla Kalkan o tur etkisizdir ama silinmez.
 - **Enerji maliyeti Can olan kart** (Kan Bedeli) Can'ın maliyetten fazlaysa oynanabilir (0'a inemezsin).
-- **Lanet**'i Çöp Atma ile (2→1) veya Takas ile elden çıkar. Çöp'e giren Lanet deste karışınca geri gelir.
-- **Deste biterse** Çöp karıştırılıp yeni deste olur (Kalıcı kartlar hariç).
+- **Lanet**'i Çöp Atma ile (2→1) veya Takas ile elden çıkar. Çöp'e atılan Lanet, deste biterse karışıp geri gelir.
+- **Deste biterse** ortak Çöp karıştırılıp yeni deste olur (Kalıcı kartlar hariç). 104 kartta bu çoğu maçta hiç olmaz.
+- **Ortak desteyle ilgili:** Durum Avı ortak desteden arar, açılan diğer kartlar herkes için destenin altına gider. Gözcü'nün altına koyduğu kartları rakip de sonunda çeker. Bu yüzden Gözcü sırayı sana değil desteye göre ayarlar.
+- **Metalik Deri** oyuncu başına bir kez oynanır; 2. kopya Çöp Atma'ya gider.
 
 ## 8. Zafer Şartları
 1. **Rakibin Can'ını 0'a indir.**

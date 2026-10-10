@@ -265,5 +265,8 @@
    },
    "text_tr": "Kalıcı. Her tur başı 1 Kalkan kazan."
   }
- ]
+ ],
+ "deck_copies": 2,
+ "shared_pile": true,
+ "pile_size": 104
 }

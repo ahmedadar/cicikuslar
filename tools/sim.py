@@ -9,24 +9,30 @@ CARDS = json.load(open(os.path.join(HERE, "..", "data", "cards.json"), encoding=
 # ---- ayarlanabilir kural parametreleri ----
 P = dict(hp=20, energy=4, hand=5, draw=2, hand_limit=7, bank_cap=8,
          shield_per_slot=2, sh_slots=2, en_slots=2, max_sh=4, max_en=4,
-         second_bonus_cards=0, second_bonus_energy=0, first_skip_draw=False,
+         second_bonus_cards=0, second_bonus_energy=0, first_skip_draw=False, shared=True, copies=2,
          reflect_cap=3, curse_dmg=1, fatigue_from=0)
 
 def build():
     d = []
     for c in CARDS:
-        d += [c["id"]] * c["count"]
-    assert len(d) == 52
+        d += [c["id"]] * c["count"] * P["copies"]
     return d
 INFO = {c["id"]: c for c in CARDS}
 
+class Table:  # deste + cop (ortak ya da kisisel)
+    def __init__(s):
+        s.deck = build(); random.shuffle(s.deck); s.disc = []
+
 class Pl:
-    def __init__(s, p, second):
+    deck = property(lambda s: s.tbl.deck, lambda s, v: setattr(s.tbl, "deck", v))
+    disc = property(lambda s: s.tbl.disc, lambda s, v: setattr(s.tbl, "disc", v))
+    def __init__(s, p, second, tbl):
+        s.tbl = tbl
         s.hp = P["hp"]; s.en = P["energy"] + (P["second_bonus_energy"] if second else 0)
-        s.deck = build(); random.shuffle(s.deck); s.disc = []; s.hand = []
+        s.hand = []
         s.shield = 0; s.sh_slots = P["sh_slots"]; s.en_slots = P["en_slots"]
         s.metal = False; s.reflect = 0; s.mult = 1
-        s.en_lock = 0; s.sh_lock = 0; s.dmg_dealt = 0; s.played = 0; s.wasted = 0
+        s.en_lock = 0; s.sh_lock = 0; s.dmg_dealt = 0; s.played = 0; s.scraps = 0; s.wasted = 0
     def draw(s, n=1):
         for _ in range(n):
             if not s.deck:
@@ -85,7 +91,7 @@ def score(me, op, cid):
     if "gain_energy" in e: return 100
     if k == "multiplier": return 90 if any(INFO[h].get("effect", {}).get("atk", 0) >= 2 for h in me.hand) else -1
     if k in ("energy_slot_add",): return 85 if me.hp > 8 else -1
-    if k == "metallic": return 80
+    if k == "metallic": return 80 if not me.metal else -1
     if k == "status_draw": return 60
     if k == "recycle": 
         t = me.disc[-1] if me.disc else None
@@ -115,7 +121,7 @@ def turn(me, op, tn, first):
     # curse ayiklama (2 kart -> 1 cek)
     if "curse" in me.hand and len(me.hand) >= 2:
         me.hand.remove("curse"); w = min((h for h in me.hand), key=lambda h: score(me, op, h)); me.hand.remove(w)
-        me.disc += ["curse", w]; me.draw(1)
+        me.disc += ["curse", w]; me.draw(1); me.scraps += 1
     while me.hp > 0 and op.hp > 0:
         opts = [(score(me, op, h), h) for h in set(me.hand) if cost_ok(me, INFO[h])]
         opts = [o for o in opts if o[0] > 0]
@@ -133,7 +139,10 @@ def turn(me, op, tn, first):
         w = min(me.hand, key=lambda h: score(me, op, h)); me.hand.remove(w); me.disc.append(w)
 
 def game():
-    a, b = Pl(P, False), Pl(P, True)
+    if P["shared"]:
+        tb = Table(); a, b = Pl(P, False, tb), Pl(P, True, tb)
+    else:
+        a, b = Pl(P, False, Table()), Pl(P, True, Table())
     a.draw(P["hand"]); b.draw(P["hand"] + P["second_bonus_cards"])
     pl = [a, b]; t = 0
     while t < 60:
@@ -150,21 +159,29 @@ def game():
     return -1, 30, a, b
 
 def run(n):
-    w = collections.Counter(); turns = []; pl_ = []; wasted = []
+    w = collections.Counter(); turns = []; pl_ = []; wasted = []; mins_t = []; mins_m = []
     for _ in range(n):
         r, t, a, b = game(); w[r] += 1; turns.append(t); pl_ += [a.played / t, b.played / t]; wasted.append((a.wasted + b.wasted) / 2)
+        acts = a.played + b.played + a.scraps + b.scraps; tt = 2 * t
+        mins_t.append((60 + tt * 20 + acts * 12) / 60)   # masa: kurulum 1dk + 20sn/tur + 12sn/aksiyon
+        mins_m.append((tt * 8 + acts * 6) / 60)          # mobil: 8sn/tur + 6sn/aksiyon
     return dict(first=w[0] / n, second=w[1] / n, draw=w[-1] / n, avg_rounds=sum(turns) / n,
                 p10=sorted(turns)[n // 10], p90=sorted(turns)[9 * n // 10],
-                cards_per_turn=sum(pl_) / len(pl_), wasted_energy=sum(wasted) / n)
+                cards_per_turn=sum(pl_) / len(pl_), wasted_energy=sum(wasted) / n,
+                dk_masa=sum(mins_t) / n, dk_mobil=sum(mins_m) / n, dk_masa_p90=sorted(mins_t)[9 * n // 10])
 
 if __name__ == "__main__":
     n = int(sys.argv[1]) if len(sys.argv) > 1 else 5000
     random.seed(7)
     base = dict(P)
-    sets = [("A) Ham kurallar (Gerilim yok)", {}),
-            ("B) + Gerilim (R7)", dict(fatigue_from=7)),
-            ("C) B + 2.oyuncu +1 Enerji [ONERILEN]", dict(fatigue_from=7, second_bonus_energy=1)),
-            ("D) C + HP 15", dict(fatigue_from=7, second_bonus_energy=1, hp=15))]
+    G = dict(fatigue_from=7, second_bonus_energy=1)
+    sets = [("A) Ortak 104 kart, ham kurallar", {}),
+            ("B) Ortak 104 + Gerilim R7", dict(fatigue_from=7)),
+            ("C) B + 2.oyuncu +1 Enerji", G),
+            ("D) C, Gerilim R6", dict(G, fatigue_from=6)),
+            ("E) C, Can 15", dict(G, hp=15)),
+            ("F) C, Can 15, Gerilim R6", dict(G, hp=15, fatigue_from=6)),
+            ("G) Kisisel 52+52 (onceki), C", dict(G, shared=False, copies=1))]
     for name, over in sets:
         P.clear(); P.update(base); P.update(over)
-        r = run(n); print(f"{name:40s}", {k: round(v, 2) for k, v in r.items()})
+        r = run(n); print(f"{name:34s}", {k: round(v, 2) for k, v in r.items()})
