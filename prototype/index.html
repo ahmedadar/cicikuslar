@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Cicikuş Kart Oyunu - Prototip</title>
+<style>
+:root{--bg:#14181f;--panel:#1d2430;--panel2:#252e3d;--txt:#e8edf5;--mut:#8a97ab;--hp:#e5484d;--en:#f5b53d;--sh:#4aa3ff;--ok:#3ecf8e;--atk:#e5484d;--def:#4aa3ff;--sp:#a78bfa;--line:#33405a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+#app{max-width:520px;margin:0 auto;height:100%;display:flex;flex-direction:column;padding:8px 10px;gap:8px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.name{font-weight:700}.mut{color:var(--mut)}.sp{flex:1}
+.stat{display:inline-flex;gap:4px;align-items:center;background:var(--panel2);border-radius:8px;padding:2px 8px;font-weight:600}
+.hp{color:var(--hp)}.en{color:var(--en)}.sh{color:var(--sh)}
+.slots{display:flex;gap:3px}.slot{width:16px;height:16px;border-radius:4px;border:2px solid;display:inline-block}
+.slot.s{border-color:var(--sh)}.slot.e{border-color:var(--en)}.slot.lock{opacity:.35;background:repeating-linear-gradient(45deg,#000 0 3px,transparent 3px 6px)}
+.tag{font-size:11px;background:#2d3a52;border-radius:6px;padding:1px 6px;color:#cdd8ea}
+#mid{display:flex;gap:8px}
+#mid .panel{flex:1;min-width:0}
+#log{height:92px;overflow-y:auto;font-size:12px;color:#c3cde0}
+#log div{padding:1px 0}#log .me{color:#9fd4ff}#log .op{color:#ffb0b3}#log .sys{color:var(--en)}
+#hand{display:flex;gap:6px;overflow-x:auto;padding:4px 2px 6px;scroll-snap-type:x proximity;min-height:132px}
+.card{flex:0 0 96px;scroll-snap-align:start;background:var(--panel2);border:2px solid var(--line);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:3px;cursor:pointer;position:relative;color:var(--txt);text-align:left;font:inherit}
+.card .c{position:absolute;top:-8px;right:-6px;background:var(--en);color:#111;border-radius:12px;font-weight:800;font-size:12px;padding:1px 7px}
+.card .c.hpc{background:var(--hp);color:#fff}
+.card b{font-size:12.5px;padding-right:18px}.card small{font-size:11px;color:#cdd8ea}
+.card.attack{border-color:var(--atk)}.card.shield{border-color:var(--def)}.card.hybrid{border-color:#c07be0}.card.draw,.card.energy{border-color:var(--ok)}
+.card.slot,.card.stun,.card.reaction,.card.recycle,.card.buff,.card.permanent{border-color:var(--sp)}.card.curse{border-color:#777;background:#2a1d2e}
+.card.off{opacity:.42}.card.sel{outline:3px solid var(--en);transform:translateY(-4px)}
+.back{flex:0 0 40px;height:56px;background:repeating-linear-gradient(45deg,#2a3550 0 6px,#222c43 6px 12px);border:2px solid var(--line);border-radius:8px;cursor:default}
+.back.pick{cursor:pointer;border-color:var(--en)}
+#acts{display:flex;gap:6px;flex-wrap:wrap}
+button.b{background:var(--panel2);color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;font-weight:600;flex:1;min-width:0;cursor:pointer}
+button.b:disabled{opacity:.4}button.b.pri{background:var(--ok);color:#06210f;border-color:var(--ok)}
+#prompt{background:#3a2f14;border:1px solid var(--en);border-radius:10px;padding:7px 10px;display:none}
+#modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:14px;z-index:9}
+#modal .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;max-width:420px;width:100%;max-height:90vh;overflow:auto}
+#modal h3{margin:0 0 8px}#modal .opt{display:block;width:100%;margin:6px 0;text-align:left}
+.turn{display:inline-block;padding:1px 8px;border-radius:8px;font-weight:700;background:var(--en);color:#111}
+.turn.opp{background:var(--hp);color:#fff}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="panel" id="oppPanel"></div>
+  <div id="mid">
+    <div class="panel" id="info"></div>
+    <div class="panel" style="flex:1.6"><div id="log"></div></div>
+  </div>
+  <div id="prompt"></div>
+  <div class="panel" id="mePanel"></div>
+  <div id="hand"></div>
+  <div id="acts"></div>
+</div>
+<div id="modal"><div class="box" id="modalBox"></div></div>
+<script src="cards-data.js"></script>
+<script src="engine.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>
